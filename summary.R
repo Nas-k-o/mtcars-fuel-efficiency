@@ -70,5 +70,20 @@ pie(cyl_counts,
 
 
 #Defining summaries
-
-
+summary(mtcars)
+write.csv(summary(mtcars), "Summary.csv")
+#-------------------------------------------------------#
+summary(fastestCars)
+summary(SlowerCars)
+write.csv(summary(fastestCars), "fastestCarsSummary.csv")
+write.csv(summary(SlowerCars), "slowerCarsSummary.csv")
+#---------------------------------------------------------#
+summary(automaticCars)
+summary(manualCars)
+write.csv(summary(automaticCars), "automaticCarsSummary.csv")
+write.csv(summary(manualCars), "manualCarsSummary.csv")
+#--------------------------------------------------------#
+summary(engineV)
+summary(engineS)
+write.csv(summary(engineV), "engineVSummary.csv")
+write.csv(summary(manualCars), "engineSSummary.csv")
