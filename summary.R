@@ -69,6 +69,7 @@ print(table)
 
 #Qsec specs
 fastestCars <- mtcars[mtcars$qsec <= 17.85, ]
+SlowerCars <- mtcars[mtcars$qsec > 17.85, ]
 
 hist(fastestCars$qsec,
      main = "Best results of the 1/4 mile test (below average), for 32 automobiles (1973–74 models)
@@ -101,6 +102,42 @@ plot(fastestCars$qsec, HorsePower[mtcars$qsec <= 17.85],
 
 plot(fastestCars$qsec, CarWeight[mtcars$qsec <= 17.85],
      main = "Weight in TONS of the best performing automobiles
+     included in the 1974 Motor Trend US magazine",
+     ylab = "Weight in TONS",
+     xlab = "1/4 Mile time in seconds")
+
+
+hist(SlowerCars$qsec,
+     main = "Above average results of the 1/4 mile test, for 32 automobiles (1973–74 models)
+     included int the 1974 Motor Trend US magazine.",
+     xlab = "TIME (range in seconds)",
+     ylab = "Count of Automobiles",
+     col = "#2980b9")
+
+rug(QuarterMile, lwd = 2, col = "#2c3e50")
+
+plot(Engine[mtcars$qsec > 17.85], SlowerCars$qsec, xaxt = "n",
+     main = "Engine type of the comparable slower performing automobiles
+     included in the 1974 Motor Trend US magazine",
+     xlab = "Engine Type",
+     ylab = "1/4 Mile time in seconds")
+axis(side = 1, at = c(0, 1), labels = c("V-shaped", "Straight"))
+
+plot(Transmission[mtcars$qsec > 17.85], SlowerCars$qsec, xaxt = "n",
+     main = "Engine type of the comparable slower performing automobiles
+     included in the 1974 Motor Trend US magazine",
+     xlab = "Transmission Type",
+     ylab = "1/4 Mile time in seconds")
+axis(side = 1, at = c(0, 1), labels = c("Automatic", "Manual"))
+
+plot(SlowerCars$qsec, HorsePower[mtcars$qsec > 17.85],
+     main = "GROSS Horsepower of the comparable slower performing automobiles
+     included in the 1974 Motor Trend US magazine",
+     ylab = "Gross Horsepower",
+     xlab = "1/4 Mile time in seconds")
+
+plot(SlowerCars$qsec, CarWeight[mtcars$qsec > 17.85],
+     main = "Weight in TONS of the comparable slower performing automobiles
      included in the 1974 Motor Trend US magazine",
      ylab = "Weight in TONS",
      xlab = "1/4 Mile time in seconds")
