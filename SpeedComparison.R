@@ -12,29 +12,31 @@ grid(nx = NULL, ny = NULL, col = "#8e44ad", lty = "dotted", lwd = 2)
 rug(mtcars$qsec, lwd = 2, col = "#34495e")
 
 #Comparing the results based on Horsepower
-plot(mtcars$hp,mtcars$qsec,
-     main = "performances of automobiles in 1/4 mile test
+HP_QSEC <- ggplot(mtcars, aes(x = hp, y = qsec)) + 
+  geom_point(color = "steelblue", lwd = 3) +
+  geom_smooth(method = "lm", col = "red") + 
+  labs(title = "performances of automobiles in 1/4 mile test
      against their horsepower
      from the 1974 Motor Trend US magazine",
-     xlab = "Horsepower",
-     ylab = "Result of 1/4 mile test (in seconds)",
-     col = "steelblue",
-     pch = 19,
-     cex = 1.5) 
+       x = "Horsepower",
+       y = "Result of 1/4 mile test (in seconds)",
+       ) + theme_minimal(base_size = 14)
 
-abline(lm(mtcars$hp ~ mtcars$qsec), col = "red", lwd = 2)
-
+print(HP_QSEC)
 
 #Comparing the results based on Weight
-plot(mtcars$wt,mtcars$qsec,
-     main = "performances of automobiles in 1/4 mile test
-     against their horsepower
+WT_QSEC <- ggplot(mtcars, aes(x = wt, y = qsec)) + 
+  geom_point(color = "steelblue", lwd = 3) +
+  geom_smooth(method = "lm", col = "red") + 
+  labs(title = "performances of automobiles in 1/4 mile test
+     against their weight
      from the 1974 Motor Trend US magazine",
-     xlab = "WEIGHT IN TONS",
-     ylab = "Result of 1/4 mile test (in seconds)",
-     col = "steelblue",
-     pch = 19,
-     cex = 1.5)
+       x = "WEIGHT IN TONS",
+       y = "Result of 1/4 mile test (in seconds)",
+  ) + theme_minimal(base_size = 14)
+
+print(WT_QSEC)
+
 
 #Comparing The results based on Cylinders
 plot(mtcars$cyl,mtcars$qsec,
@@ -106,14 +108,16 @@ plot(Transmission[mtcars$qsec <= 17.85], fastestCars$qsec, xaxt = "n",
      cex = 1.5)
 axis(side = 1, at = c(0, 1), labels = c("Automatic", "Manual"))
 
-plot(fastestCars$qsec, HorsePower[mtcars$qsec <= 17.85],
-     main = "GROSS Horsepower of the best performing automobiles
+FC_QSEC <- ggplot(fastestCars, aes(y = qsec, x = HorsePower[mtcars$qsec <= 17.85])) + 
+  geom_point(color = "steelblue", lwd = 3) +
+  geom_smooth(method = "lm", col = "red") + 
+  labs(title = "GROSS Horsepower of the best performing automobiles
      included in the 1974 Motor Trend US magazine",
-     ylab = "Gross Horsepower",
-     xlab = "1/4 Mile time in seconds",
-     col = "steelblue",
-     pch = 19,
-     cex = 1.5)
+       x = "Gross Horsepower",
+       y = "Result of 1/4 mile test (in seconds)",
+  ) + theme_minimal(base_size = 14)
+
+print(FC_QSEC)
 
 
 plot(fastestCars$qsec, CarWeight[mtcars$qsec <= 17.85],
@@ -124,6 +128,17 @@ plot(fastestCars$qsec, CarWeight[mtcars$qsec <= 17.85],
      col = "steelblue",
      pch = 19,
      cex = 1.5)
+
+FC_QSEC_WT <- ggplot(fastestCars, aes(y = qsec, x = CarWeight[mtcars$qsec <= 17.85])) + 
+  geom_point(color = "steelblue", lwd = 3) +
+  geom_smooth(method = "lm", col = "red") + 
+  labs(title = "Weight in TONS of the best performing automobiles
+     included in the 1974 Motor Trend US magazine",
+       x = "WEIGHT IN TONS",
+       y = "Result of 1/4 mile test (in seconds)",
+  ) + theme_minimal(base_size = 14)
+
+print(FC_QSEC_WT)
 
 
 hist(SlowerCars$qsec,
@@ -151,14 +166,16 @@ plot(Transmission[mtcars$qsec > 17.85], SlowerCars$qsec, xaxt = "n",
      ylab = "1/4 Mile time in seconds")
 axis(side = 1, at = c(0, 1), labels = c("Automatic", "Manual"))
 
-plot(SlowerCars$qsec, HorsePower[mtcars$qsec > 17.85],
-     main = "GROSS Horsepower of the comparable slower performing automobiles
+SC_QSEC <- ggplot(SlowerCars, aes(y = qsec, x = HorsePower[mtcars$qsec > 17.85])) + 
+  geom_point(color = "steelblue", lwd = 3) +
+  geom_smooth(method = "lm", col = "red") + 
+  labs(title = "GROSS Horsepower of the comparable slower performing automobiles
      included in the 1974 Motor Trend US magazine",
-     ylab = "Gross Horsepower",
-     xlab = "1/4 Mile time in seconds",
-     col = "steelblue",
-     pch = 19,
-     cex = 1.5)
+       x = "Gross Horsepower",
+       y = "Result of 1/4 mile test (in seconds)",
+  ) + theme_minimal(base_size = 14)
+
+print(SC_QSEC)
 
 plot(SlowerCars$qsec, CarWeight[mtcars$qsec > 17.85],
      main = "Weight in TONS of the comparable slower performing automobiles
@@ -169,3 +186,13 @@ plot(SlowerCars$qsec, CarWeight[mtcars$qsec > 17.85],
      pch = 19,
      cex = 1.5)
         
+SC_QSEC_WT <- ggplot(SlowerCars, aes(y = qsec, x = CarWeight[mtcars$qsec > 17.85])) + 
+  geom_point(color = "steelblue", lwd = 3) +
+  geom_smooth(method = "lm", col = "red") + 
+  labs(title = "Weight in TONS of the comparable slower performing automobiles
+     included in the 1974 Motor Trend US magazine",
+       x = "WEIGHT IN TONS",
+       y = "Result of 1/4 mile test (in seconds)",
+  ) + theme_minimal(base_size = 14)
+
+print(SC_QSEC_WT)
