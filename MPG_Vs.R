@@ -8,6 +8,9 @@ plot(mtcars$hp, mtcars$mpg,
      pch = 19,
      cex = 1.5)
 
+abline(lm(mtcars$mpg ~ mtcars$hp), col = "red", lwd = 2)
+
+
 #Plotting MPG against Weight
 plot(mtcars$wt, mtcars$mpg,
      main = "Miles per Gallon against Weight",
@@ -17,10 +20,12 @@ plot(mtcars$wt, mtcars$mpg,
      pch = 19,
      cex = 1.5)
 
+abline(lm(mtcars$mpg ~ mtcars$wt), col = "red", lwd = 2)
+
+
+
 #Plotting MPG against CYL
 plot(mtcars$cyl, mtcars$mpg,
-     col = "#2980b9",
-     pch = 19,
      main = "Miles per Gallon against Number of Cylinders",
      ylab = "Miles per Gallon",
      xlab = "Number of Cylinders",

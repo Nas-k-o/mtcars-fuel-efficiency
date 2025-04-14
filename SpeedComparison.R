@@ -20,7 +20,10 @@ plot(mtcars$hp,mtcars$qsec,
      ylab = "Result of 1/4 mile test (in seconds)",
      col = "steelblue",
      pch = 19,
-     cex = 1.5)
+     cex = 1.5) 
+
+abline(lm(mtcars$hp ~ mtcars$qsec), col = "red", lwd = 2)
+
 
 #Comparing the results based on Weight
 plot(mtcars$wt,mtcars$qsec,
@@ -62,12 +65,11 @@ boxplot(mtcars$qsec ~ mtcars$vs,
         pch = 19,
         col = c("#2980b9", "#e74c3c"), 
         ylab = "Result of 1/4 Mile Test (in seconds)",
-        xlab = "Engine (0 = V-shaped, 1 = Manual)",
+        xlab = "Engine (0 = V-shaped, 1 = Straight)",
         border = "#1abc9c", 
         horizontal = FALSE)
 
 #Making Graphs to describe the 1/4 mile performance based on specs for the cars included in the magazine
-table <- describe(mtcars)
 print(table)
 
 fastestCars <- mtcars[mtcars$qsec <= 17.85, ]
@@ -107,11 +109,12 @@ axis(side = 1, at = c(0, 1), labels = c("Automatic", "Manual"))
 plot(fastestCars$qsec, HorsePower[mtcars$qsec <= 17.85],
      main = "GROSS Horsepower of the best performing automobiles
      included in the 1974 Motor Trend US magazine",
-     xlab = "Gross Horsepower",
-     ylab = "1/4 Mile time in seconds",
+     ylab = "Gross Horsepower",
+     xlab = "1/4 Mile time in seconds",
      col = "steelblue",
      pch = 19,
      cex = 1.5)
+
 
 plot(fastestCars$qsec, CarWeight[mtcars$qsec <= 17.85],
      main = "Weight in TONS of the best performing automobiles

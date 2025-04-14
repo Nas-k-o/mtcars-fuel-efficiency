@@ -25,7 +25,7 @@ Transmission <- mtcars$am
 hist(FuelConsumption, 
      breaks = 5,
      xlab = "Miles per Gallon",
-     ylab = "Count of cars which relate",
+     ylab = "Amount of Automobiles",
      main = "Miles per Gallon Frequencies, for 32 automobiles (1973–74 models)
      included int the 1974 Motor Trend US magazine.",
      col = "steelblue",
@@ -61,7 +61,7 @@ grid(nx = NULL, ny = NULL, col = "#8e44ad", lty = "dotted", lwd = 2)
 rug(CarWeight, lwd = 2, col = "#2c3e50")
 
 #Number of Cylinders
-labels <- paste(names(cyl_counts), "cyl -", round(100 * cyl_counts / sum(cyl_counts), 1), "%")
+labels <- paste(names(cyl_counts), "cyl -", cyl_counts)
 pie(cyl_counts, 
     labels = labels,
     main = "Car Counts by Cylinder for 32 automobiles (1973–74 models)
@@ -87,3 +87,5 @@ summary(engineV)
 summary(engineS)
 write.csv(summary(engineV), "engineVSummary.csv")
 write.csv(summary(manualCars), "engineSSummary.csv")
+
+plot(mtcars$mpg, mtcars$hp)
