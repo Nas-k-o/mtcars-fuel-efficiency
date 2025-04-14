@@ -117,3 +117,5 @@ vs_summary <- mtcars %>%
   summarise(median_mpg = median(mpg))
 vs_summary
 
+write.csv(am_summary, "data/am_summary.csv")
+write.csv(vs_summary, "data/vs_summary.csv")
