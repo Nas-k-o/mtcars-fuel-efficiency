@@ -4,7 +4,9 @@ data(mtcars)
 #Loading package
 install.packages("psych")
 install.packages("dplyr")
-p_load("psych")
+install.packages("ggplot2")
+install.packages("gridExtra")
+library(psych)
 library(ggplot2)
 library(dplyr)
 library(gridExtra)
@@ -12,7 +14,8 @@ library(gridExtra)
 #Sample look at the data set
 ?mtcars
 head(mtcars)
-
+summary(mtcars)
+str(mtcars)
 
 #Factoring the data in a new data frame
 engine <- as.factor(mtcars$vs)
