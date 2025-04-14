@@ -3,7 +3,11 @@ data(mtcars)
 
 #Loading package
 install.packages("psych")
+install.packages("dplyr")
 p_load("psych")
+library(ggplot2)
+library(dplyr)
+library(gridExtra)
 
 #Sample look at the data set
 ?mtcars
@@ -100,3 +104,16 @@ write.csv(summary(engineV), "engineVSummary.csv")
 write.csv(summary(manualCars), "engineSSummary.csv")
 
 plot(mtcars$mpg, mtcars$hp)
+
+
+#Summarizing and Quantifying the median of categorical variables
+am_summary <- mtcars %>%
+  group_by(am) %>%
+  summarize(median_mpg = median(mpg))
+am_summary
+
+vs_summary <- mtcars %>%
+  group_by(vs) %>%
+  summarise(median_mpg = median(mpg))
+vs_summary
+
