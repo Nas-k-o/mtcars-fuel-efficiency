@@ -9,6 +9,17 @@ p_load("psych")
 ?mtcars
 head(mtcars)
 
+
+#Factoring the data in a new data frame
+engine <- as.factor(mtcars$vs)
+transmission <- as.factor(mtcars$am)
+gear <- as.factor(mtcars$gear)
+carb <- as.factor(mtcars$carb)
+cyl <- as.factor(mtcars$cyl)
+Automobiles <- data.frame(engine, transmission, gear, carb, cyl)
+str(Automobiles)
+
+
 #Variables for easier use
 FuelConsumption <- mtcars$mpg
 HorsePower <- mtcars$hp
