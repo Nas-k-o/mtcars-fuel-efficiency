@@ -3,7 +3,24 @@ import pandas as pd
 import os
 import openpyxl
 
-
+def guide():
+    print("Welcome to CSV TO XLSX Converter! YAY")
+    print("In this small program we will convert the MTCARS summaries to EXCEL TABLES!")
+    print("Why? Well because I can! ;)")
+    print("----------------------------------------------")
+    print("[1] - Help")
+    print("[2] - Purpose")
+    print("[3] - GET STARTED")
+    print("[ANY KEY] - EXIT")
+    choice = input("Select: ")
+    match choice:
+        case "1":
+            print("")
+        case "2":
+            print("")
+        case "3":
+            list_csv_files()
+            select_csv()
 
 def list_csv_files(directory="data"):
     files = [f for f in os.listdir(directory) if f.endswith(".csv")]
@@ -55,5 +72,4 @@ def load_r_summary_csv(path):
 
     return df.to_excel(excelFileName, sheet_name=sheetName, index=True)
 
-list_csv_files()
-select_csv()
+guide()
