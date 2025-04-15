@@ -1,6 +1,9 @@
 # For this part we will be using pandas
 import pandas as pd
 import os
+import openpyxl
+
+
 
 def list_csv_files(directory="data"):
     files = [f for f in os.listdir(directory) if f.endswith(".csv")]
@@ -9,10 +12,13 @@ def list_csv_files(directory="data"):
     return files
 
 def select_csv():
+    global excelFileName, sheetName
     files = list_csv_files()
     choice = int(input("Select File: "))
     if 1 <= choice <= len(files):
         route = os.path.join("data", files[choice - 1])
+        excelFileName = "ExcelTables/table_" + files[choice - 1] + ".xlsx"
+        sheetName = files[choice - 1]
         print(load_r_summary_csv(route))
     else:
         print("Invalid selection.")
@@ -46,7 +52,8 @@ def load_r_summary_csv(path):
 
     df = pd.DataFrame({col: [v[i] for _, v in cleaned_data] for i, col in enumerate(columns)})
     df.insert(0, "Stat", [label for label, _ in cleaned_data])
-    return df
+
+    return df.to_excel(excelFileName, sheet_name=sheetName, index=True)
 
 list_csv_files()
 select_csv()
