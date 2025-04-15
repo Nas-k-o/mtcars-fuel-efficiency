@@ -15,12 +15,30 @@ def guide():
     choice = input("Select: ")
     match choice:
         case "1":
-            print("")
+            help_information()
         case "2":
-            print("")
+            purpose()
         case "3":
             list_csv_files()
             select_csv()
+
+def help_information():
+    print("[1] - About the MTCARS dataset")
+    print("[2] - Back to Menu")
+    print("[ANY KEY] EXIT")
+    file = open("resources/MTCARS_info.txt", "r", encoding="utf8")
+    choice = input("Select: ")
+    match choice:
+        case "1":
+            line = file.readlines()
+            print(line)
+            help_information()
+        case "2":
+            guide()
+
+def purpose():
+    print("I am building this project as I am studying data analysis\n The idea of this script is not only to be part\n of this project, but also to be\n reworked and saved as a tool for future uses")
+    guide()
 
 def list_csv_files(directory="data"):
     files = [f for f in os.listdir(directory) if f.endswith(".csv")]
@@ -70,6 +88,7 @@ def load_r_summary_csv(path):
     df = pd.DataFrame({col: [v[i] for _, v in cleaned_data] for i, col in enumerate(columns)})
     df.insert(0, "Stat", [label for label, _ in cleaned_data])
 
+    print("SUCCESS")
     return df.to_excel(excelFileName, sheet_name=sheetName, index=True)
 
 guide()
