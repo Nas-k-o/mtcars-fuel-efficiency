@@ -1,6 +1,21 @@
 # For this part we will be using pandas
 import pandas as pd
+import os
 
+def list_csv_files(directory="data"):
+    files = [f for f in os.listdir(directory) if f.endswith(".csv")]
+    for idx, file in enumerate(files, start=1):
+        print(f"[{idx}] - {file}")
+    return files
+
+def select_csv():
+    files = list_csv_files()
+    choice = int(input("Select File: "))
+    if 1 <= choice <= len(files):
+        route = os.path.join("data", files[choice - 1])
+        print(load_r_summary_csv(route))
+    else:
+        print("Invalid selection.")
 
 # Using this method we will transform the summaries into a beautiful table
 def load_r_summary_csv(path):
@@ -33,6 +48,5 @@ def load_r_summary_csv(path):
     df.insert(0, "Stat", [label for label, _ in cleaned_data])
     return df
 
-
-path = "data/Summary.csv"
-print(load_r_summary_csv(path))
+list_csv_files()
+select_csv()
