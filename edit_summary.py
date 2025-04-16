@@ -90,4 +90,5 @@ def load_r_summary_csv(path):
     print("SUCCESS")
     return df.to_excel(excelFileName, sheet_name=sheetName, index=True)
 
-guide()
+if __name__ == "__main__":
+    guide()

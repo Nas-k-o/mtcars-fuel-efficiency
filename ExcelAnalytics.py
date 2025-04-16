@@ -5,6 +5,9 @@ import os
 import openpyxl
 from pandas.core.interchange.dataframe_protocol import Column
 
+from edit_summary import select_csv
+
+
 def list_excel_files(directory="ExcelTables"):
     files = [f for f in os.listdir(directory) if f.endswith(".xlsx")]
     for idx, file in enumerate(files, start=1):
@@ -36,5 +39,6 @@ def loadTest(excelfile, column):
     excelDF = pd.read_excel(excelfile, usecols="B," + column)
     print(excelDF)
 
-select_xlsx()
+if __name__ == "__main__":
+   select_xlsx()
 
