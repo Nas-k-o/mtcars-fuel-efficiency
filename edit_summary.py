@@ -54,8 +54,10 @@ def select_csv():
         excelFileName = "ExcelTables/table_" + files[choice - 1] + ".xlsx"
         sheetName = files[choice - 1]
         print(load_r_summary_csv(route))
+        guide()
     else:
         print("Invalid selection.")
+        guide()
 
 # Using this method we will transform the summaries into a beautiful table
 def load_r_summary_csv(path):

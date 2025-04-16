@@ -25,14 +25,17 @@ def select_xlsx():
         match menu:
             case 1:
                 print(excelDF.describe())
+                select_xlsx()
             case 2:
                 print("[1]mpg\n[2]cyl\n[3]disp\n[4]hp\n[5]drat\n[6]wt\n[7]qsec\n[8]vs\n[9]am\n[10]gear\n[11]carb")
                 choice = int(input("Select Column: "))
                 columns = ["C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"]
                 column = columns[choice - 1]
                 loadTest(ExcelFile, column)
+                select_xlsx()
     else:
         print("Invalid selection.")
+        select_xlsx()
 
 
 def loadTest(excelfile, column):
