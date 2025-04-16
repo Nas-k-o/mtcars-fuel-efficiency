@@ -1,12 +1,9 @@
 from csv import excel
-
 import pandas as pd
 import os
 import openpyxl
 from pandas.core.interchange.dataframe_protocol import Column
-
 from edit_summary import select_csv
-
 
 def list_excel_files(directory="ExcelTables"):
     files = [f for f in os.listdir(directory) if f.endswith(".xlsx")]
