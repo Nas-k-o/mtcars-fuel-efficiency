@@ -36,6 +36,5 @@ def loadTest(excelfile, column):
     excelDF = pd.read_excel(excelfile, usecols="B," + column)
     print(excelDF)
 
-list_excel_files()
 select_xlsx()
 

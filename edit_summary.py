@@ -19,7 +19,6 @@ def guide():
         case "2":
             purpose()
         case "3":
-            list_csv_files()
             select_csv()
 
 def help_information():
