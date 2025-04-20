@@ -1,6 +1,6 @@
 from csv import excel
+from pydoc import describe
 from tkinter.font import names
-
 import pandas as pd
 import os
 import openpyxl
@@ -9,14 +9,17 @@ def Main():
     global excelDF
     excelDF = pd.DataFrame(pd.read_excel("ExcelTables/table_cars.csv.xlsx"))
     list_Cars()
+    SelectCar(i)
+    choice = int(input("[1] - Simulation\n[2] - Compare"))
 
 def list_Cars():
+    global i
     i = 1
     for car in excelDF["Car"]:
         print("[" + str(i) + "]" + " - " + car)
         i += 1
     i = int(input("Select: "))
-    SelectCar(i)
+
 
 def SelectCar(i):
     car = Automobile()
