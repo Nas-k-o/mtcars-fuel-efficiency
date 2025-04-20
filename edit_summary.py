@@ -53,51 +53,41 @@ def select_csv():
         route = os.path.join("data", files[choice - 1])
         excelFileName = "ExcelTables/table_" + files[choice - 1] + ".xlsx"
         sheetName = files[choice - 1]
-        print(load_r_summary_csv(route))
+        print(load_custom_r_csv(route))
         guide()
     else:
         print("Invalid selection.")
         guide()
 
 # Using this method we will transform the summaries into a beautiful table
-import pandas as pd
 
-def load_r_summary_csv(path, excel_file=None, sheet_name="Sheet1"):
+def load_custom_r_csv(path, excel_file=None, sheet_name="Sheet1"):
     with open(path, "r", encoding="utf-8") as f:
         lines = [line.strip() for line in f if line.strip()]
 
     if not lines:
-        raise ValueError("The file is empty or contains only whitespace.")
+        raise ValueError("The file is empty.")
 
-    # Extract column names
-    header_parts = lines[0].split('","')[1:]  # Skip first column (usually 'Statistic' or empty)
-    columns = [h.replace('"', '').strip() for h in header_parts]
+    # First line: header
+    header_line = lines[0]
+    columns = header_line.replace('"', '').split(',')[1:]  # skip the first empty column
 
-    stats = []
+    # Remaining lines: data
     data = []
+    index = []
 
     for line in lines[1:]:
-        parts = line.split('","')
-        label = parts[0].replace('"', '').strip()  # e.g., "Min."
-        values = []
-
-        for p in parts[1:]:
-            val = p.replace('"', '').strip()
-            try:
-                values.append(float(val))
-            except ValueError:
-                values.append(None)  # Gracefully handle missing/non-numeric values
-
-        stats.append(label)
+        parts = line.strip().split(',')
+        index.append(parts[0].replace('"', ''))  # car name as index
+        values = [float(p) if p.replace('.', '', 1).isdigit() else None for p in parts[1:]]
         data.append(values)
 
-    # Build the DataFrame
-    df = pd.DataFrame(data, columns=columns)
-    df.insert(0, "Stat", stats)
+    df = pd.DataFrame(data, columns=columns, index=index)
+    df.index.name = "Car"
 
     if excel_file:
-        df.to_excel(excel_file, sheet_name=sheet_name, index=False)
-        print(f"Exported to {excel_file} successfully.")
+        df.to_excel(excel_file, sheet_name=sheet_name)
+        print(f"✅ Exported to {excel_file} successfully.")
 
     return df
 
