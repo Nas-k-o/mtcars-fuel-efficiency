@@ -60,37 +60,47 @@ def select_csv():
         guide()
 
 # Using this method we will transform the summaries into a beautiful table
-def load_r_summary_csv(path):
+import pandas as pd
+
+def load_r_summary_csv(path, excel_file=None, sheet_name="Sheet1"):
     with open(path, "r", encoding="utf-8") as f:
-        lines = f.readlines()
+        lines = [line.strip() for line in f if line.strip()]
 
-    cleaned_data = []
-    row_labels = ["Min.", "1st Qu.", "Median", "Mean", "3rd Qu.", "Max."]
+    if not lines:
+        raise ValueError("The file is empty or contains only whitespace.")
 
-    for i, line in enumerate(lines[1:]):
-        parts = line.strip().split('","')
-        label = row_labels[i] if i < len(row_labels) else f"Row{i + 1}"
+    # Extract column names
+    header_parts = lines[0].split('","')[1:]  # Skip first column (usually 'Statistic' or empty)
+    columns = [h.replace('"', '').strip() for h in header_parts]
 
+    stats = []
+    data = []
+
+    for line in lines[1:]:
+        parts = line.split('","')
+        label = parts[0].replace('"', '').strip()  # e.g., "Min."
         values = []
-        # skip the initial empty string
+
         for p in parts[1:]:
-            clean = p.replace('"', '').split(":")[-1].strip()
+            val = p.replace('"', '').strip()
             try:
-                values.append(float(clean))
-            except:
-                values.append(None)
+                values.append(float(val))
+            except ValueError:
+                values.append(None)  # Gracefully handle missing/non-numeric values
 
-        cleaned_data.append((label, values))
+        stats.append(label)
+        data.append(values)
 
-    # Extract column names from the second line (without summary labels)
-    raw_header = lines[0].strip().split('","')[1:]
-    columns = [h.replace('"', '').strip() for h in raw_header]
+    # Build the DataFrame
+    df = pd.DataFrame(data, columns=columns)
+    df.insert(0, "Stat", stats)
 
-    df = pd.DataFrame({col: [v[i] for _, v in cleaned_data] for i, col in enumerate(columns)})
-    df.insert(0, "Stat", [label for label, _ in cleaned_data])
+    if excel_file:
+        df.to_excel(excel_file, sheet_name=sheet_name, index=False)
+        print(f"Exported to {excel_file} successfully.")
 
-    print("SUCCESS")
-    return df.to_excel(excelFileName, sheet_name=sheetName, index=True)
+    return df
+
 
 if __name__ == "__main__":
     guide()
