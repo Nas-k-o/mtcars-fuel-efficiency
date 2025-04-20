@@ -46,18 +46,18 @@ def list_csv_files(directory="data"):
     return files
 
 def select_csv():
-    global excelFileName, sheetName
     files = list_csv_files()
     choice = int(input("Select File: "))
     if 1 <= choice <= len(files):
         route = os.path.join("data", files[choice - 1])
         excelFileName = "ExcelTables/table_" + files[choice - 1] + ".xlsx"
         sheetName = files[choice - 1]
-        print(load_custom_r_csv(route))
+        print(load_custom_r_csv(route, excel_file=excelFileName, sheet_name=sheetName))
         guide()
     else:
         print("Invalid selection.")
         guide()
+
 
 # Using this method we will transform the summaries into a beautiful table
 
