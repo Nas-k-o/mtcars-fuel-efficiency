@@ -79,7 +79,15 @@ def tunning(wt, hp, mpg, qsec):
     print(f"Old acceleration rate {round(current_acc, 2)}, expected acceleration rate {round(new_acc, 2)}")
     print(f"Old QSEC performance {qsec}, expected QSEC performance {round(new_qsec, 2)}")
     print("---------------------------------------------------------------------------------------")
-
+    choice = input("Save and Export to Excel? Y/N:")
+    match choice:
+        case "Y":
+            excelFileName = "Tunning/table_" + car.name + ".xlsx"
+            sheetName = car.name
+            df.to_excel(excelFileName, sheet_name=sheetName)
+            print(f"✅ Exported to {excelFileName} successfully.")
+        case "N":
+            print("OK")
 
 def estimate_top_speed(hp, wt_tons, cd=0.32, area=2.2, air_density=1.225):
     power_watts = hp * 746
