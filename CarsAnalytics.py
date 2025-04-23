@@ -2,12 +2,15 @@ from csv import excel
 from pydoc import describe
 from tkinter.font import names
 import pandas as pd
+import matplotlib as mtp
 import os
 import openpyxl
 from openpyxl.worksheet.print_settings import PRINT_AREA_RE
 
 
 def Main():
+    print("WELCOME TO CAR SIMULATION\nyeah... couldn't thought of better name....")
+
     global excelDF
     excelDF = pd.DataFrame(pd.read_excel("ExcelTables/table_cars.csv.xlsx"))
     list_Cars()
@@ -26,7 +29,7 @@ def list_Cars():
     for car in excelDF["Car"]:
         print("[" + str(i) + "]" + " - " + car)
         i += 1
-    i = int(input("Select: "))
+    i = int(input("Select your vehicle: "))
 
 
 def SelectCar(i):
