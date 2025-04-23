@@ -88,6 +88,7 @@ def tunning(wt, hp, mpg, qsec):
     print(f"Old acceleration rate {round(current_acc, 2)}, expected acceleration rate {round(new_acc, 2)}")
     print(f"Old QSEC performance {qsec}, expected QSEC performance {round(new_qsec, 2)}")
     print("---------------------------------------------------------------------------------------")
+    simulation_graphs(new_qsec,new_mpg,new_wt,new_hp)
     choice = input("Save and Export to Excel? Y/N:")
     match choice:
         case "Y":
@@ -95,6 +96,12 @@ def tunning(wt, hp, mpg, qsec):
             sheetName = car.name
             df.to_excel(excelFileName, sheet_name=sheetName)
             print(f"✅ Exported to {excelFileName} successfully.")
+        case "N":
+            print("OK")
+    choice = input("Save and Export the graphs? Y/N:")
+    match choice:
+        case "Y":
+            plt.savefig('GRAPHS/Python Graphs/graph.png')
         case "N":
             print("OK")
 
@@ -160,6 +167,36 @@ def compare():
             plt.savefig('GRAPHS/Python Graphs/graph.png')
         case "N":
             print("OK")
+
+def simulation_graphs(qsec,mpg,wt,hp):
+    # Data for the simulation
+    labels = ['Current', 'Expected']
+    qsec_values = [car.qsec, qsec]  # Current and new QSEC
+    mpg_values = [car.mpg, mpg]    # Current and new MPG
+    acc_values = [2.5 * (car.wt / car.hp), 2.5 * (wt / hp)]  # Current and new acceleration
+
+    # Create a figure and axis for the subplots
+    fig, axs = plt.subplots(3, 1, figsize=(10, 15))
+
+    # Plot for QSEC (1/4 mile time)
+    axs[0].bar(labels, qsec_values, color='skyblue')
+    axs[0].set_title("1/4 Mile Time (QSEC) - Simulation")
+    axs[0].set_ylabel('QSEC (Seconds)')
+
+    # Plot for MPG (Miles Per Gallon)
+    axs[1].bar(labels, mpg_values, color='lightgreen')
+    axs[1].set_title("MPG - Simulation")
+    axs[1].set_ylabel('MPG')
+
+    # Plot for Acceleration (ACC)
+    axs[2].bar(labels, acc_values, color='lightcoral')
+    axs[2].set_title("Acceleration - Simulation")
+    axs[2].set_ylabel('Acceleration')
+
+    # Display the plots
+    plt.tight_layout()  # Adjust the layout for better spacing
+    plt.show()
+
 
 def compare_graphs():
     # Set plot style
