@@ -1,5 +1,6 @@
 from csv import excel
 from pydoc import describe
+from time import sleep
 from tkinter.font import names
 import pandas as pd
 import matplotlib as mtp
@@ -10,7 +11,7 @@ from openpyxl.worksheet.print_settings import PRINT_AREA_RE
 
 def Main():
     print("WELCOME TO CAR SIMULATION\nyeah... couldn't thought of better name....")
-
+    sleep(3)
     global excelDF
     excelDF = pd.DataFrame(pd.read_excel("ExcelTables/table_cars.csv.xlsx"))
     list_Cars()
@@ -152,4 +153,5 @@ def compare():
             print("OK")
 
 
-Main()
+if __name__ == "__main__":
+    Main()
