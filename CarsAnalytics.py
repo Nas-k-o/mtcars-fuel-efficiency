@@ -64,8 +64,9 @@ def tunning(wt, hp, mpg, qsec):
     new_mpg = estimate_mpg(new_hp, new_wt)
     new_qsec = estimate_qsec(new_hp, new_wt)
     new_acc = 2.5 * (new_wt / new_hp)
-    old_data = [wt, hp, mpg, qsec]
-    new_data = [new_wt, new_hp, new_mpg, new_qsec]
+    tunned_results = {'Old data': [wt, hp, mpg, qsec, current_acc], 'New data': [new_wt, new_hp, new_mpg, new_qsec, new_acc]}
+    df = pd.DataFrame(data = tunned_results)
+    print(df)
     print(f"by adding {add_wt} additional weight, the car weight in tons is {new_wt}")
     print(f"By adding {add_hp} additional horsepower, the new amount of hp is {new_hp}")
     print(f"Old Miles Per Gallon consumption {mpg}, expected MPG consumption {round(new_mpg, 2)}")
