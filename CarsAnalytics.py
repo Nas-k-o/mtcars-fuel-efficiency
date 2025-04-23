@@ -3,7 +3,8 @@ from pydoc import describe
 from time import sleep
 from tkinter.font import names
 import pandas as pd
-import matplotlib as mtp
+import matplotlib.pyplot as plt
+import numpy as np
 import os
 import openpyxl
 from openpyxl.worksheet.print_settings import PRINT_AREA_RE
@@ -113,6 +114,7 @@ def estimate_mpg(hp, wt_tons, a=90, b=0.6):
 
 def compare():
     list_Cars()
+    global compare_Car
     compare_Car = Automobile()
     compare_Car.name = excelDF.loc[i - 1, "Car"]
     compare_Car.mpg = excelDF.loc[i - 1, "mpg"]
@@ -142,6 +144,7 @@ def compare():
     df_comparison = pd.DataFrame(data=car_data, index=["Original", "Compared"])
     print(df_comparison)
     print("---------------------------------------------------------------------------------------")
+    compare_graphs()
     choice = input("Save and Export to Excel? Y/N:")
     match choice:
         case "Y":
@@ -151,6 +154,44 @@ def compare():
             print(f"✅ Exported to {excelFileName} successfully.")
         case "N":
             print("OK")
+    choice = input("Save and Export the graphs? Y/N:")
+    match choice:
+        case "Y":
+            plt.savefig('GRAPHS/Python Graphs/graph.png')
+        case "N":
+            print("OK")
+
+def compare_graphs():
+    # Set plot style
+    plt.style.use('_mpl-gallery')
+
+    # Prepare data for plotting
+    labels = ['Original', 'Compared']
+    qsec_values = [car.qsec, compare_Car.qsec]
+    mpg_values = [car.mpg, compare_Car.mpg]
+    acc_values = [2.5 * (car.wt / car.hp), 2.5 * (compare_Car.wt / compare_Car.hp)]  # Assuming acc is calculated as 2.5 * (wt/hp)
+
+    # Create a figure and axis for the subplots
+    fig, axs = plt.subplots(3, 1, figsize=(10, 15))
+
+    # Plot for QSEC (1/4 mile time)
+    axs[0].bar(labels, qsec_values, color='skyblue')
+    axs[0].set_title("1/4 Mile Time (QSEC) Comparison")
+    axs[0].set_ylabel('QSEC (Seconds)')
+
+    # Plot for MPG (Miles Per Gallon)
+    axs[1].bar(labels, mpg_values, color='lightgreen')
+    axs[1].set_title("MPG Comparison")
+    axs[1].set_ylabel('MPG')
+
+    # Plot for Acceleration (ACC)
+    axs[2].bar(labels, acc_values, color='lightcoral')
+    axs[2].set_title("Acceleration Comparison")
+    axs[2].set_ylabel('Acceleration')
+
+    # Display the plots
+    plt.tight_layout()  # Adjust the layout for better spacing
+    plt.show()
 
 
 if __name__ == "__main__":
