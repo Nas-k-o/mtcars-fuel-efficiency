@@ -4,6 +4,8 @@ from tkinter.font import names
 import pandas as pd
 import os
 import openpyxl
+from openpyxl.worksheet.print_settings import PRINT_AREA_RE
+
 
 def Main():
     global excelDF
@@ -11,6 +13,7 @@ def Main():
     list_Cars()
     SelectCar(i)
     choice = int(input("[1] - Simulation\n[2] - Compare"))
+    tunning(car.wt, car.hp, car.mpg, car.qsec)
 
 def list_Cars():
     global i
@@ -22,12 +25,14 @@ def list_Cars():
 
 
 def SelectCar(i):
+    global car
     car = Automobile()
     car.name = excelDF.loc[i-1, "Car"]
     car.mpg = excelDF.loc[i-1, "mpg"]
     car.disp = excelDF.loc[i-1, "disp"]
     car.hp = excelDF.loc[i - 1, "hp"]
     car.drat = excelDF.loc[i - 1, "drat"]
+    car.wt = excelDF.loc[i - 1, "wt"]
     car.qsec = excelDF.loc[i - 1, "qsec"]
     car.vs = "V-shaped" if excelDF.loc[i - 1, "vs"] == 0 else "Straight"
     car.am = "Automatic" if excelDF.loc[i - 1, "am"] == 0 else "Manual"
@@ -47,5 +52,39 @@ class Automobile:
         self.am = ""
         self.gear = 0
         self.carb = 0
+
+def tunning(wt, hp, mpg, qsec):
+    current_pwr = hp / wt
+    current_acc = 2.5 * (wt/hp)
+    current_top = estimate_top_speed(hp, wt)
+    add_wt = float(input("What is the expected weight in TONS? (Ex: 0.2): "))
+    add_hp = int(input("What is the amount of added horsepowers: "))
+    new_wt = wt + add_wt
+    new_hp = hp + add_hp
+    new_mpg = estimate_mpg(new_hp, new_wt)
+    new_qsec = estimate_qsec(new_hp, new_wt)
+    old_data = [wt, hp, mpg, qsec]
+    new_data = [new_wt, new_hp, new_mpg, new_qsec]
+    print(f"by adding {add_wt} additional weight, the car weight in tons is {new_wt}")
+    print(f"By adding {add_hp} additional horsepower, the new amount of hp is {new_hp}")
+    print(f"Old Miles Per Gallon consumption {mpg}, expected MPG consumption {round(new_mpg, 2)}")
+    print(f"Old acceleration rate {current_acc}, expected acceleration rate TO BE DONE")
+    print(f"Old QSEC performance {qsec}, expected QSEC performance {round(new_qsec, 2)}")
+
+
+def estimate_top_speed(hp, wt_tons, cd=0.32, area=2.2, air_density=1.225):
+    power_watts = hp * 746
+    top_speed_mps = (2 * power_watts / (air_density * cd * area)) ** (1 / 3)
+    top_speed_kmph = top_speed_mps * 3.6
+    return top_speed_kmph
+
+def estimate_qsec(hp, wt_tons, a=6.5, b=0.3):
+    wt_kg = wt_tons * 1000
+    return a * (wt_kg / hp) ** b
+
+def estimate_mpg(hp, wt_tons, a=90, b=0.6):
+    ratio = wt_tons / hp
+    return a * (ratio ** b)
+
 
 Main()
