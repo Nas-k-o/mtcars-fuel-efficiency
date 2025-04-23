@@ -64,14 +64,21 @@ def tunning(wt, hp, mpg, qsec):
     new_mpg = estimate_mpg(new_hp, new_wt)
     new_qsec = estimate_qsec(new_hp, new_wt)
     new_acc = 2.5 * (new_wt / new_hp)
-    tunned_results = {'Old data': [wt, hp, mpg, qsec, current_acc], 'New data': [new_wt, new_hp, new_mpg, new_qsec, new_acc]}
-    df = pd.DataFrame(data = tunned_results)
+    tunned_results = {
+        'Current Data': [wt, hp, mpg, qsec, current_acc],
+        'Expected Data': [new_wt, new_hp, round(new_mpg, 2), round(new_qsec, 2), round(new_acc, 2)]
+    }
+
+    df = pd.DataFrame(data=tunned_results, index=['Weight', 'HP', 'MPG', 'QSEC', 'Acceleration']).T
     print(df)
-    print(f"by adding {add_wt} additional weight, the car weight in tons is {new_wt}")
-    print(f"By adding {add_hp} additional horsepower, the new amount of hp is {new_hp}")
+    print("--------------------------------------------------------------------------------------")
+    print("SUMMARY: ")
+    print(f"by adding {add_wt} additional weight, the car weight in tons is {round(new_wt, 2)}")
+    print(f"By adding {add_hp} additional horsepower, the new amount of hp is {round(new_hp, 2)}")
     print(f"Old Miles Per Gallon consumption {mpg}, expected MPG consumption {round(new_mpg, 2)}")
     print(f"Old acceleration rate {round(current_acc, 2)}, expected acceleration rate {round(new_acc, 2)}")
     print(f"Old QSEC performance {qsec}, expected QSEC performance {round(new_qsec, 2)}")
+    print("---------------------------------------------------------------------------------------")
 
 
 def estimate_top_speed(hp, wt_tons, cd=0.32, area=2.2, air_density=1.225):
