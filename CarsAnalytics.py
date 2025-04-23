@@ -12,8 +12,13 @@ def Main():
     excelDF = pd.DataFrame(pd.read_excel("ExcelTables/table_cars.csv.xlsx"))
     list_Cars()
     SelectCar(i)
-    choice = int(input("[1] - Simulation\n[2] - Compare"))
-    tunning(car.wt, car.hp, car.mpg, car.qsec)
+    choice = int(input("[1] - Simulation\n[2] - Compare\nSELECT: "))
+    match choice:
+        case 1:
+            tunning(car.wt, car.hp, car.mpg, car.qsec)
+        case 2:
+            compare()
+
 
 def list_Cars():
     global i
@@ -38,7 +43,6 @@ def SelectCar(i):
     car.am = "Automatic" if excelDF.loc[i - 1, "am"] == 0 else "Manual"
     car.gear = excelDF.loc[i - 1, "gear"]
     car.carb = excelDF.loc[i - 1, "carb"]
-    print(car.vs)
 
 class Automobile:
     def __init__(self):
@@ -102,6 +106,47 @@ def estimate_qsec(hp, wt_tons, a=6.5, b=0.3):
 def estimate_mpg(hp, wt_tons, a=90, b=0.6):
     ratio = wt_tons / hp
     return a * (ratio ** b)
+
+def compare():
+    list_Cars()
+    compare_Car = Automobile()
+    compare_Car.name = excelDF.loc[i - 1, "Car"]
+    compare_Car.mpg = excelDF.loc[i - 1, "mpg"]
+    compare_Car.disp = excelDF.loc[i - 1, "disp"]
+    compare_Car.hp = excelDF.loc[i - 1, "hp"]
+    compare_Car.drat = excelDF.loc[i - 1, "drat"]
+    compare_Car.wt = excelDF.loc[i - 1, "wt"]
+    compare_Car.qsec = excelDF.loc[i - 1, "qsec"]
+    compare_Car.vs = "V-shaped" if excelDF.loc[i - 1, "vs"] == 0 else "Straight"
+    compare_Car.am = "Automatic" if excelDF.loc[i - 1, "am"] == 0 else "Manual"
+    compare_Car.gear = excelDF.loc[i - 1, "gear"]
+    compare_Car.carb = excelDF.loc[i - 1, "carb"]
+
+    car_data = {
+        'mpg': [car.mpg, compare_Car.mpg],
+        'disp': [car.disp, compare_Car.disp],
+        'hp': [car.hp, compare_Car.hp],
+        'drat': [car.drat, compare_Car.drat],
+        'wt': [car.wt, compare_Car.wt],
+        'qsec': [car.qsec, compare_Car.qsec],
+        'vs': [car.vs, compare_Car.vs],
+        'am': [car.am, compare_Car.am],
+        'gear': [car.gear, compare_Car.gear],
+        'carb': [car.carb, compare_Car.carb]
+    }
+
+    df_comparison = pd.DataFrame(data=car_data, index=["Original", "Compared"])
+    print(df_comparison)
+    print("---------------------------------------------------------------------------------------")
+    choice = input("Save and Export to Excel? Y/N:")
+    match choice:
+        case "Y":
+            excelFileName = "Comparisons/" + car.name + "Vs" + compare_Car.name + ".xlsx"
+            sheetName = "Compare"
+            df_comparison.to_excel(excelFileName, sheet_name=sheetName)
+            print(f"✅ Exported to {excelFileName} successfully.")
+        case "N":
+            print("OK")
 
 
 Main()
