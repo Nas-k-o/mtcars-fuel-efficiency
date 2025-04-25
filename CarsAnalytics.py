@@ -12,17 +12,22 @@ from openpyxl.worksheet.print_settings import PRINT_AREA_RE
 
 def Main():
     print("WELCOME TO CAR SIMULATION\nyeah... couldn't thought of better name....")
-    sleep(3)
+    sleep(2)
     global excelDF
     excelDF = pd.DataFrame(pd.read_excel("ExcelTables/table_cars.csv.xlsx"))
-    list_Cars()
-    SelectCar(i)
-    choice = int(input("[1] - Simulation\n[2] - Compare\nSELECT: "))
-    match choice:
-        case 1:
-            tunning(car.wt, car.hp, car.mpg, car.qsec)
-        case 2:
-            compare()
+
+    while True:
+        list_Cars()
+        SelectCar(i)
+        choice = input("[1] - Simulation\n[2] - Compare\n[ANY KEY] - Exit\nSELECT: ")
+        match choice:
+            case "1":
+                tunning(car.wt, car.hp, car.mpg, car.qsec)
+            case "2":
+                compare()
+            case _:
+                print("Exiting the app...")
+                break
 
 
 def list_Cars():
