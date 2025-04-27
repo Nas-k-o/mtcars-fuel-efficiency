@@ -1,25 +1,40 @@
-from flask import Flask, render_template
-import edit_summary as es
-import ExcelAnalytics as ea
-import CarsAnalytics as ca
-from ExcelAnalytics import list_excel_files, select_xlsx
+from flask import Flask, render_template, request
+import pandas as pd
+import os
 
 app = Flask(__name__)
 
-default_file = "ExcelTables/table_cars.csv.xlsx"
+
+default_file = "table_cars.csv.xlsx"  # Set the default file name
 
 
-@app.route("/", methods = ["POST","GET"])
+def list_excel_files(directory="ExcelTables"):
+    files = [f for f in os.listdir(directory) if f.endswith(".xlsx")]
+    return files
+
+
+def select_xlsx(file_choice=None):
+    if not file_choice:
+        file_choice = default_file
+
+    excel_file = os.path.join("ExcelTables", file_choice)
+    excelDF = pd.read_excel(excel_file)
+    return excelDF
+
+
+@app.route("/", methods=["GET", "POST"])
 def index():
-    files = list_excel_files()
     table_data = None
 
-    excelDF = select_xlsx(default_file)
-    table_data = excelDF.to_html(classes="data", header="true", index=False)
+    if request.method == "POST":
+        excelDF = select_xlsx()
+        table_data = excelDF.to_html(classes="data", header="true", index=False)
+    else:
+        excelDF = select_xlsx()
+        table_data = excelDF.to_html(classes="data", header="true", index=False)
 
     return render_template("index.html", table_data=table_data)
 
 
-
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
