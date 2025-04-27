@@ -1,39 +1,128 @@
 body {
-    font-family: Arial, sans-serif;
+    background: linear-gradient(45deg, #2A1F1D 0%, #5E4F4C 100%);
+    color: #F4A261;
+    font-family: 'Times New Roman', serif;
     line-height: 1.6;
-    margin: 20px;
-    max-width: 1000px;
-    margin: auto;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border: 3px solid #FF6B35;
+    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 h1, h2 {
-    color: #2c3e50;
+    font-family: 'Arial Black', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #FF6B35;
+    text-shadow: 2px 2px 0 #000;
+}
+
+h1 {
+    font-size: 2.5em;
+    border-bottom: 4px double #FF6B35;
+    padding-bottom: 10px;
+}
+
+.navbar {
+    background: #2A1F1D;
+    padding: 15px;
+    margin: 20px 0;
+    border: 2px solid #FF6B35;
+}
+
+.navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+.navbar a {
+    color: #F4A261;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    transition: all 0.3s ease;
+}
+
+.navbar a:hover {
+    color: #FF6B35;
+    background: rgba(255, 107, 53, 0.2);
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
-}
-
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
+    background: #3E2B28;
 }
 
 th {
-    background-color: #3498db;
-    color: white;
+    background: #FF6B35;
+    color: #2A1F1D;
+    padding: 12px;
+    text-transform: uppercase;
+    font-family: 'Arial', sans-serif;
+}
+
+td {
+    padding: 10px;
+    border: 1px solid #FF6B35;
+    color: #F7ECE1;
 }
 
 tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background: rgba(255, 107, 53, 0.1);
 }
 
 .data-reference {
-    background-color: #ecf0f1;
-    padding: 15px;
-    border-radius: 5px;
+    background: #3E2B28;
+    padding: 20px;
     margin: 20px 0;
+    border-left: 5px solid #FF6B35;
+}
+
+.data-reference h2 {
+    margin-top: 0;
+}
+
+ul {
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 8px;
+    color: #F7ECE1;
+}
+
+strong {
+    color: #FF6B35;
+}
+
+/* Retro 70s stripe decoration */
+.container::before {
+    content: '';
+    display: block;
+    height: 5px;
+    background: linear-gradient(90deg, 
+        #FF6B35 0%, 
+        #FF6B35 20%, 
+        #2A1F1D 20%, 
+        #2A1F1D 40%, 
+        #F4A261 40%, 
+        #F4A261 60%, 
+        #2A1F1D 60%, 
+        #2A1F1D 80%, 
+        #FF6B35 80%, 
+        #FF6B35 100%);
+    margin-bottom: 30px;
 }
