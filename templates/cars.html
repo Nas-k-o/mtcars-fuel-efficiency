@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mtcars Dataset Documentation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>mtcars Dataset Documentation</h1>
+        <nav class="navbar">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="cars.html">Cars</a></li>
+                <li><a href="#dataset-notes">Dataset Notes</a></li>
+            </ul>
+        </nav>
+        <section class="control-panel">
+            <div class="retro-box">
+                <h2>SELECT YOUR RIDE</h2>
+                <select class="retro-select">
+                    {% for car in car_data %}
+                        <option value="{{ car['Car'] }}">{{ car['Car'] }}</option>
+                    {% endfor %}
+                </select>
+                <button class="retro-button">LOAD SPECS</button>
+            </div>
+        </section>
+
+        <!-- Current Specs Display -->
+        <section class="specs-display">
+            <div class="retro-box">
+                <h2>CURRENT SPECIFICATIONS</h2>
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <span class="spec-label">Model:</span>
+                        <span class="spec-value">Mazda RX4</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Weight:</span>
+                        <span class="spec-value">2.62 tons</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Horsepower:</span>
+                        <span class="spec-value">110 HP</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">MPG:</span>
+                        <span class="spec-value">21.0</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tuning Controls -->
+        <section class="tuning-section">
+            <div class="retro-box">
+                <h2>🔧 PERFORMANCE TUNING</h2>
+                <div class="tuning-controls">
+                    <div class="control-group">
+                        <label class="control-label">Add Weight (tons):</label>
+                        <input type="number" class="retro-input" value="0.0" step="0.1">
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Boost HP:</label>
+                        <input type="number" class="retro-input" value="0">
+                    </div>
+                    <button class="retro-button">SIMULATE</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comparison Section -->
+        <section class="comparison-section">
+            <div class="retro-box">
+                <h2>⚖️ CAR COMPARISON</h2>
+                <div class="comparison-controls">
+                    <select class="retro-select">
+                        {% for car in car_data %}
+                            <option value="{{ car['Car'] }}">{{ car['Car'] }}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="retro-button">COMPARE</button>
+                </div>
+
+                <div class="comparison-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Spec</th>
+                                <th>Current</th>
+                                <th>Compared</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Weight</td>
+                                <td>2.62t</td>
+                                <td>2.32t</td>
+                            </tr>
+                            <tr>
+                                <td>Horsepower</td>
+                                <td>110 HP</td>
+                                <td>93 HP</td>
+                            </tr>
+                            <tr>
+                                <td>MPG</td>
+                                <td>21.0</td>
+                                <td>22.8</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Display -->
+        <section class="results-section">
+            <div class="retro-box">
+                <h2>📊 PERFORMANCE RESULTS</h2>
+                <div class="results-grid">
+                    <div class="graph-placeholder"></div>
+                    <div class="graph-placeholder"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
