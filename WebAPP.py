@@ -1,6 +1,9 @@
-from flask import Flask, render_template, request
+from PIL.ImageStat import Global
+from flask import Flask, render_template, request, send_file
 import pandas as pd
 import os
+import openpyxl
+from pandas import ExcelFile
 
 app = Flask(__name__)
 
@@ -30,14 +33,25 @@ def cars():
 
         # Handling comparison logic
         if request.form.get("compare"):
+            global ExcelFile, compareDF
+
             compare_car_name = request.form.get("compare_car")
             compare_car = get_car_data(compare_car_name)
             comparison_data = compare_cars(selected_car, compare_car)
+            compareDF = pd.DataFrame(comparison_data)
+            print(compareDF)
+            ExcelFile = "comparison.xlsx"
             return render_template("cars.html", car_data=selected_car, comparison_data=comparison_data, excelDF=excelDF)
 
     # Default car selection on GET
     car_data = get_car_data(excelDF["Car"].iloc[0])  # Default to the first car
     return render_template("cars.html", car_data=car_data, excelDF=excelDF)
+
+@app.route("/download")
+def download():
+    filename = "comparison.xlsx"
+    compareDF.to_excel(filename, sheet_name="comparison", index=False)
+    return send_file(filename, as_attachment=True, download_name=filename, mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
 
 def get_car_data(car_name):
