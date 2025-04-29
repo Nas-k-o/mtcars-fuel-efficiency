@@ -26,18 +26,18 @@ def cars():
             add_wt = float(request.form.get("add_weight"))
             add_hp = int(request.form.get("add_hp"))
             new_car_specs = simulate_tuning(selected_car, add_wt, add_hp)
-            return render_template("cars.html", car_data=selected_car, new_car_specs=new_car_specs)
+            return render_template("cars.html", car_data=selected_car, new_car_specs=new_car_specs, excelDF=excelDF)
 
         # Handling comparison logic
         if request.form.get("compare"):
             compare_car_name = request.form.get("compare_car")
             compare_car = get_car_data(compare_car_name)
             comparison_data = compare_cars(selected_car, compare_car)
-            return render_template("cars.html", car_data=selected_car, comparison_data=comparison_data)
+            return render_template("cars.html", car_data=selected_car, comparison_data=comparison_data, excelDF=excelDF)
 
     # Default car selection on GET
     car_data = get_car_data(excelDF["Car"].iloc[0])  # Default to the first car
-    return render_template("cars.html", car_data=car_data)
+    return render_template("cars.html", car_data=car_data, excelDF=excelDF)
 
 
 def get_car_data(car_name):
